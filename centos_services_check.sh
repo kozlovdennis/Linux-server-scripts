@@ -1,5 +1,5 @@
 #!/bin/bash
-#this script will output the status of server's services
+#this script will output the short list of server's services status only
 
 NGINX='nginx.service'
 HTTPD='httpd.service'
