@@ -15,7 +15,7 @@ NC="\e[0m" #just no color
 function check (){
     SERVICE=$1
     SERVICE="${SERVICE}.service"
-    STATUS=$(systemctl is-active $SERVICE) #appending '.service' extention to each service
+    STATUS=$(systemctl is-active $SERVICE) #appending '.service' extention to each service, comment out if excessive
     if [[ $STATUS = 'active' ]]; then
         COLOR="$GREEN"
     else
