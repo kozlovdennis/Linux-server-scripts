@@ -1,32 +1,44 @@
 #!/bin/bash
-#this script will output the short list of server's services status only
+#when run without values this script will output the short list of server's services status
+#This script will output any process or processes status if provided with such values
 
-NGINX='nginx.service'
-HTTPD='httpd.service'
-FTPD='pure-ftpd.service'
-PHP80='php80-php-fpm.service'
-MYSQLD='mysqld.service'
+#Reading the input of services names and stashing it into the array
+SERVICES=("$@")
+#In case userd didn't enter the services, script will have static server's services that'll be used by default
+DEFAULTSERVICES=( nginx httpd mysqld php80-php-fpm pure-ftpd )
 
-GREEN="\e[1;32m" # \e = escape, [1 = bald text, ;32 = color ANSII decoding, m = finish the escape
+GREEN="\e[1;32m" # \e = escape, [1 = bold text, ;32 = green color ANSII decoding, m = finish the escape
 RED="\e[1;31m"
 NC="\e[0m" #just no color
 
 #This one checks Active status of a service, adds its name to the output and highlights it with the needed color 
-check (){
+function check (){
     SERVICE=$1
-    ISACTIVE=$(systemctl is-active $SERVICE)
-    if [[ $ISACTIVE = 'active' ]]
-    then
+    SERVICE="${SERVICE}.service"
+    STATUS=$(systemctl is-active $SERVICE) #appending '.service' extention to each service
+    if [[ $STATUS = 'active' ]]; then
         COLOR="$GREEN"
     else
         COLOR="$RED"
     fi
     echo -ne "${NC}$SERVICE: "
-    echo -e "${COLOR}$ISACTIVE${NC}"
+    echo -e "${COLOR}$STATUS${NC}"
 }
 
-check $NGINX
-check $HTTPD
-check $FTPD
-check $PHP80
-check $MYSQLD
+#Initiate cycling through services within the array and for each of them run check function
+function init (){
+    ARRAY=("$@") #Taking all the array values passed to this function into a single variable
+    for i in "${ARRAY[@]}"; do
+        check $i #running the check funcion for each service name (variables in the array)
+    done
+}
+
+#If the SERVICES array will contain something, preceed with its values, or else assign to it static values
+if [[ ${#SERVICES[@]} -eq 0 ]]; then
+    init "${DEFAULTSERVICES[@]}"
+else
+    init "${SERVICES[@]}"
+fi
+
+#Clearing the environmental variable after usage
+SERVICES=()
