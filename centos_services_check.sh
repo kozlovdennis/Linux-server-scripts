@@ -1,6 +1,6 @@
 #!/bin/bash
-#when run without values this script will output the short list of server's services status
-#This script will output any process or processes status if provided with such values
+#when run without values this script will output 
+#This script outputs any of one or more processes status (i.e. active) if provided with such values
 
 #Reading the input of services names and stashing it into the array
 SERVICES=("$@")
