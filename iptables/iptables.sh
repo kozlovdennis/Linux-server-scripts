@@ -1,4 +1,5 @@
 #!/bin/zsh
+#this script configures the iptables
 IPTABLES=/sbin/iptables
 MODPROBE=/sbin/modprobe
 INT_NET=192.168.0.0/24
