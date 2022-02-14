@@ -6,6 +6,16 @@ INT_NET=192.168.0.0/24
 #default router name: (to find use "arp -vn" command (you need to install net-tools for that first))
 NIC_NAME=ether
 
+### flush existing rules and set chain policy setting to DROP:
+echo "[+] Flushing existing iptables rules..."
+$IPTABLES -F
+$IPTABLES -F -t nat
+$IPTABLES -X
+$IPTABLES -P INPUT DROP
+$IPTABLES -P OUTPUT DROP
+$IPTABLES -P FORWARD DROP
+
+
 ### load connection-tracking modules
 $MODPROBE ip_conntrack
 $MODPROBE iptables_nat
@@ -35,7 +45,7 @@ $IPTABLES -A INPUT -i ! lo -j LOG --log-prefix "DROP " --log-ip-options --log-tc
 echo "[+] Setting up OUTPUT chain..."
 
 ### state tracking rules
-$IPTABLES -A OUTPUT -m state --state INVALID -j LOG --log-prifix "DROP INVALID " --log-ip-options --log-tcp-options
+$IPTABLES -A OUTPUT -m state --state INVALID -j LOG --log-prefix "DROP INVALID " --log-ip-options --log-tcp-options
 $IPTABLES -A OUTPUT -m state --state INVALID -j DROP
 $IPTABLES -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 

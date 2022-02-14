@@ -1,12 +1,12 @@
 #!/bin/zsh
-#this script flushes the iptables to DROP
+#this script flushes the iptables to ACCEPT
 IPTABLES=/sbin/iptables
 
-### flush existing rules and set chain policy setting to DROP
+### flush existing rules and set chain policy setting to ACCEPT
 echo "[+] Flushing existing iptables rules..."
 $IPTABLES -F
 $IPTABLES -F -t nat
 $IPTABLES -X
-$IPTABLES -P INPUT DROP
-$IPTABLES -P OUTPUT DROP
-$IPTABLES -P FORWARD DROP
+$IPTABLES -P INPUT ACCEPT
+$IPTABLES -P OUTPUT ACCEPT
+$IPTABLES -P FORWARD ACCEPT
