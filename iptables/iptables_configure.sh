@@ -1,7 +1,7 @@
 #!/bin/zsh
 #this script configures the iptables
-IPTABLES=/usr/bin/iptables
-MODPROBE=/usr/bin/modprobe
+IPTABLES=/usr/sbin/iptables
+MODPROBE=/usr/sbin/modprobe
 INT_NET=192.168.0.0/24
 #default router name: (to find use "arp -vn" command (you need to install net-tools for that first))
 NIC_NAME=ether
