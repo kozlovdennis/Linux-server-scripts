@@ -1,8 +1,17 @@
 #!/bin/zsh
 #this script flushes the iptables to ACCEPT
 IPTABLES=/sbin/iptables
+POLICY=$1 # policy setting
 
-### flush existing rules and set chain policy setting to ACCEPT
+function checkinput(){
+    if [[ $1 != 'active' ]]; then
+        COLOR="$GREEN"
+    else
+        COLOR="$RED"
+    fi
+}
+
+### flush existing rules and set chain policy setting
 echo "[+] Flushing existing iptables rules..."
 $IPTABLES -F
 $IPTABLES -F -t nat

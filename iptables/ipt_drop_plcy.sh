@@ -1,11 +1,11 @@
 #!/bin/bash
-# this script configures the iptables
+# this script configures the iptables using DROP as default policy, as a result this is a lot more complicated way to configure iptables
 IPTABLES=/usr/sbin/iptables # which iptables
 MODPROBE=/usr/sbin/modprobe # which modprobe
 INT_NET="10.12.101.0/24" # ip addr show
 INT_NIC=enp0s8 # default router name: (to find use "arp -vn" command (you need to install net-tools for that first))
 SSH_IP="10.12.100.14" # an ip address that SSH connection is allowed from
-SSH_NIC=enp5s0
+SSH_NIC=enp0s5
 
 ### flush existing rules and set chain policy setting to DROP:
 echo "[+] Flushing existing iptables rules..."
@@ -93,7 +93,8 @@ $IPTABLES -A FORWARD ! -i lo -j LOG --log-prefix "DROP " --log-ip-options --log-
 
 ### NAT rules ###
 echo "[+] Setting up NAT rules..."
-
+$IPTABLES -t nat -A PREROUTING -p tcp --dport 80 -i eth0 -j DNAT --t
+$IPTABLES -
 
 ### forwarding ###
 echo "[+] Enabling IP forwarding..."
