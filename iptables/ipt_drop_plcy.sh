@@ -92,9 +92,7 @@ $IPTABLES -A FORWARD -p icmp --icmp-type echo-request -j ACCEPT
 $IPTABLES -A FORWARD ! -i lo -j LOG --log-prefix "DROP " --log-ip-options --log-tcp-options
 
 ### NAT rules ###
-echo "[+] Setting up NAT rules..."
-$IPTABLES -t nat -A PREROUTING -p tcp --dport 80 -i eth0 -j DNAT --t
-$IPTABLES -
+#echo "[+] Setting up NAT rules..."
 
 ### forwarding ###
 echo "[+] Enabling IP forwarding..."
