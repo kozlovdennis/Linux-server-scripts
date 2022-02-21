@@ -23,3 +23,5 @@ $IPTABLES -A INPUT -i lo -j ACCEPT
 $IPTABLES -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 $IPTABLES -A INPUT -j REJECT --reject-with icmp-host-prohibited
 $IPTABLES -A FORWARD -j REJECT --reject-with icmp-host-prohibited
+
+
