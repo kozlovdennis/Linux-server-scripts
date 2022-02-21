@@ -6,3 +6,12 @@ INT_NET="10.12.101.0/24" # ip addr show
 INT_NIC=enp0s8 # default router name: (to find use "arp -vn" command (you need to install net-tools for that first))
 SSH_IP="10.12.100.14" # an ip address that SSH connection is allowed from
 SSH_NIC=enp0s5
+
+echo "[+] Flushing existing iptables rules..."
+$IPTABLES -F
+$IPTABLES -F -t nat
+$IPTABLES -X
+$IPTABLES -P INPUT ACCEPT
+$IPTABLES -P OUTPUT ACCEPT
+$IPTABLES -P FORWARD ACEPT
+
